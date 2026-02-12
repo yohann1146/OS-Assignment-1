@@ -31,50 +31,30 @@ To run: `./monitor.exe`
 
 ## Q3)
 
-Q4) Cellular Base Station Shell
-bs_shell.c
+## Q4) Cellular Base Station Shell
+> question_4.c
 
-Functionality
-The user inputs:
+### Functionality
+- The user inputs:<br>
+**set_freq <MHz>**: updates the local frequency variable if the input is a positive integer.<br>
+**get_freq**: displays the current base station carrier frequency.<br>
+**quit**: allows the user to exit the shell safely.<br>
 
+-The shell provides a custom interface with the prompt station-controller$.
+-External Commands such as top and ping are supported:
 
+**top**: displays real-time system resource usage and running processes.<br>
+**ping <address>**: attempts to ping the specified address exactly 4 times.
 
-set_freq <MHz>: updates the local frequency variable if the input is a positive integer.
+- The shell handles the SIGINT (Ctrl+C) signal:
+- It does not terminate on Ctrl+C. Instead, it prints a warning and resets the frequency to a safe mode of 800 MHz.
 
-
-
-get_freq: displays the current base station carrier frequency.
-
-
-
-quit: allows the user to exit the shell safely.
-
-
-The shell provides a custom interface with the prompt station-controller$.
-
-External Commands such as top and ping are supported:
-
-top: displays real-time system resource usage and running processes.
-
-ping <address>: attempts to ping the specified address exactly 4 times.
-
-The shell handles the SIGINT (Ctrl+C) signal:
-
-It does not terminate on Ctrl+C. Instead, it prints a warning and resets the frequency to a safe mode of 800 MHz.
-
-Coding
-Created a standard command loop that prints the prompt, reads user input with fgets(), and parses strings using strtok().
-
-Implemented Internal Commands by using strcmp() to catch specific keywords and modify local shell variables directly.
-
-Implemented External Commands using the fork() and execvp() system calls:
-
-The child process handles the execution of the system command.
-
-For the ping command, the code programmatically appends the -c 4 argument to ensure it runs exactly four times.
-
-The parent process uses wait() to stay in sync with the child process termination.
-
-Integrated Signal Handling using the signal() function to catch SIGINT. A custom handler function performs the frequency reset logic and clears the input buffer.
-
-Designed to handle a maximum command input of 1023 characters.
+### Coding
+- Created a standard command loop that prints the prompt, reads user input with fgets(), and parses strings using strtok().
+- Implemented Internal Commands by using strcmp() to catch specific keywords and modify local shell variables directly.
+- Implemented External Commands using the fork() and execvp() system calls:
+- The child process handles the execution of the system command.
+- For the ping command, the code programmatically appends the -c 4 argument to ensure it runs exactly four times.
+- The parent process uses wait() to stay in sync with the child process termination.
+- Integrated Signal Handling using the signal() function to catch SIGINT. A custom handler function performs the frequency reset logic and clears the input buffer.
+- Designed to handle a maximum command input of 1023 characters.
