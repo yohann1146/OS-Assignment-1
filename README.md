@@ -40,8 +40,8 @@ To run: `./monitor.exe`
 **get_freq**: displays the current base station carrier frequency.<br>
 **quit**: allows the user to exit the shell safely.<br>
 
--The shell provides a custom interface with the prompt station-controller$.
--External Commands such as top and ping are supported:
+-The shell provides a custom interface with the prompt station-controller$.<br>
+-External Commands such as top and ping are supported:<br>
 
 **top**: displays real-time system resource usage and running processes.<br>
 **ping <address>**: attempts to ping the specified address exactly 4 times.
