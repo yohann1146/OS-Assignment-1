@@ -22,12 +22,12 @@ To run: `./monitor.exe`
 
 ### Coding
 - Created pipes for parent to child and child to parent read/write. Then the parent forks a child process.
-- First, the child process *reads from p2c* and *writes to c2p*. Then it runs the **ps** (process status Linux Command): `ps -eo user,pid,%%mem,time --sort=-%%mem | head -n <iters>`
+- First, the child process *reads from p2c* and *writes to c2p*. Then it runs the **ps** (process status Linux Command): `ps -eo user,pid,%mem,time --sort=-%mem | head -n <iters>`
 - A temporary grandchild process is used to execute the above command for **r** iterations. After that, it sends a ready signal to parent and either waits to skip the given PID or kills the process.
 - The parent process *writes to p2c* and *reads from c2p*. It scans the inputs from the user and sends it to the child.
 
 ### Output
-![A screenshot of the output terminal:](imgs/Screenshot 2026-02-13 000206.png)
+![A screenshot of the output terminal:](https://github.com/yohann1146/OS-Assignment-1/blob/main/imgs/Screenshot%202026-02-13%20000206.png)
 
 ## Q3)
 
@@ -44,7 +44,7 @@ To run: `./monitor.exe`
 - External Commands such as top and ping are supported:<br>
 
 **top**: displays real-time system resource usage and running processes.<br>
-**ping <address>**: attempts to ping the specified address exactly 4 times.<br>
+**ping**: attempts to ping the specified address exactly 4 times.<br>
 
 - The shell handles the SIGINT (Ctrl+C) signal:
 - It does not terminate on Ctrl+C. Instead, it prints a warning and resets the frequency to a safe mode of 800 MHz.
