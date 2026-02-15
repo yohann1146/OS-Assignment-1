@@ -43,7 +43,28 @@ To run: `./monitor.exe`
 ### Output
 ![A screenshot of the output terminal:](https://github.com/yohann1146/OS-Assignment-1/blob/main/imgs/Screenshot%202026-02-13%20000206.png)
 
-## Q3)
+## Q3) Grep line number extractor
+> question3.c
+
+### Functionality
+- Call the compiled file using ./mygrep
+- Format: ./mygrep <word_to_search> <files>....
+- Outputs line numbers sorted in ascending order with uniques removed wherever a match is found.
+
+### Coding
+- Search term and file names manually extracted from given command line arguments argv[].
+- Used the snprintf() command to format and store the command into another character buffer.
+- The main command built uses **grep** to search the given text in the given files, then uses **cut** and ":" as the delimiter to cut out the number line only and **sort** to sort the numbers and keep uniques only.
+- Used execlp() command to terminate and replace current program entirely and run the main command on the shell.
+- Output is given directly on the terminal.
+
+### Sample input given
+<img width="468" height="102" alt="image" src="https://github.com/user-attachments/assets/eab65f88-788a-48d0-bf5d-1f4f67be2bd1" />
+<img width="468" height="102" alt="image" src="https://github.com/user-attachments/assets/889eef4e-ae56-4634-8c10-c60fdc4ea25b" />
+
+### Output
+<img width="653" height="117" alt="image" src="https://github.com/user-attachments/assets/a8515b34-27e4-4b3a-ac42-66fb34922125" />
+
 
 ## Q4) Cellular Base Station Shell
 > question_4.c
