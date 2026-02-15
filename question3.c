@@ -7,7 +7,7 @@
 #include <unistd.h>
 
 int main(int argc, char* argv[]) {
-    char cmd[2048];
+    char cmd[2000];
 
     // extract search term and file names from argv
     char *searchTerm = argv[1];
@@ -21,10 +21,10 @@ int main(int argc, char* argv[]) {
 
     // build the unix command
     // search for searchTerm in fileNames, cut after : to get numbers and sort numbers to keep unique only
-    snprintf(cmd, 2048, "grep -n %s %s | cut -d: -f2 | sort -u -n", searchTerm, fileNames);
+    snprintf(cmd, 2000, "grep -n %s %s | cut -d: -f2 | sort -u -n", searchTerm, fileNames);
     
     // execute
-    execlp("sh", "sh", "-c", cmd, (char*) NULL);
+    execlp("sh", "sh", "-c", cmd, NULL);
 
     return 0;
 }
