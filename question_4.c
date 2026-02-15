@@ -10,39 +10,34 @@
 
 int current_frequency = DEFAULT_FREQ;
 
-// Signal handler for Ctrl+C (SIGINT)
 void handle_sigint(int sig) {
     printf("\n[WARNING] Carrier Interrupt Signal Received\n");
     current_frequency = DEFAULT_FREQ;
     printf("Frequency reset to default safe mode (%d MHz)\n", DEFAULT_FREQ);
-    printf("station-controller$ "); // Print prompt again for UX
+    printf("station-controller$ ");
     fflush(stdout);
 }
 
 int main() {
     char input[MAX_INPUT];
-    char *args[64]; // Array to hold command and parameters
+    char *args[64];
     
-    // Register the signal handler
     signal(SIGINT, handle_sigint);
 
     while (1) {
         printf("station-controller$ ");
         if (fgets(input, MAX_INPUT, stdin) == NULL) break;
 
-        // Remove trailing newline
         input[strcspn(input, "\n")] = 0;
 
-        // Tokenize input
         int i = 0;
         args[i] = strtok(input, " ");
         while (args[i] != NULL) {
             args[++i] = strtok(NULL, " ");
         }
 
-        if (args[0] == NULL) continue; // Handle empty input
+        if (args[0] == NULL) continue;
 
-        // --- Internal Commands ---
         
         if (strcmp(args[0], "quit") == 0) {
             break;
@@ -63,14 +58,13 @@ int main() {
             }
         } 
         
-        // --- External Commands ---
+
         
         else if (strcmp(args[0], "top") == 0 || strcmp(args[0], "ping") == 0) {
             pid_t pid = fork();
 
             if (pid == 0) {
-                // Child Process
-                // Special handling for ping: requirements specify exactly 4 times
+                // exactly 4 times
                 if (strcmp(args[0], "ping") == 0) {
                     args[i++] = "-c";
                     args[i++] = "4";
@@ -84,7 +78,6 @@ int main() {
             } else if (pid < 0) {
                 perror("Fork failed");
             } else {
-                // Parent Process
                 wait(NULL);
             }
         } 
