@@ -4,7 +4,21 @@
 To compile: `g++ monitor.c -o monitor.exe` <br>
 To run: `./monitor.exe`
 
-## Q1)
+## Q1) Child Process Fork
+> question1.c
+
+### Functionality
+- Implements a multi-process system where a parent process sends data to a child process.
+- The parent randomly selects integers from a predefined array until every number has been chosen at least once.
+- The child receives integers and immediately calculates and prints their mathematical factors.
+- Uses user-defined input (n) to calculate dynamic sleep delays, controlling the execution speed of both processes.
+
+### Coding
+- Initializes a unidirectional data pipe (pipe()) before forking to establish communication.
+- Uses fork() to split execution; the parent writes to the pipe (fd[1]) while the child reads from it (fd[0]).
+- Tracks visited array indices to ensure full coverage, writes the value to the pipe, and sleeps for value % n seconds.
+- Continuously reads from the pipe, computes factors via iteration, and sleeps for time % n seconds.
+- The parent closes the write end after visiting all items, causing the child's read() to return 0 (EOF) and terminate safely.
 
 ## Q2) Memory Monitor
 > monitor.c
@@ -58,3 +72,19 @@ To run: `./monitor.exe`
 - The parent process uses wait() to stay in sync with the child process termination.
 - Integrated Signal Handling using the signal() function to catch SIGINT. A custom handler function performs the frequency reset logic and clears the input buffer.
 - Designed to handle a maximum command input of 1023 characters.
+
+## Q5) Custom Syscall
+> q5.c
+> myfork.c
+
+### Functionality
+- Created a custom syscall in myfork.c that is the same as fork, but also prints PID of parent process.
+- Integrated this into the Linux Kernel by modifying syscall tables and recompiling.
+- Called the function `myfork()` in a different file to test its working.
+
+### Coding
+- `SYSCALL_DEFINE0` registers our myfork as a custom syscall that takes no args.
+- It implements the builtin kernel_clone function, while setting the exit signal to `SIGCHLD` so the parent is notified when child exits.
+- It executes a print statement to print the PID of parent.
+- The main C file defines the myfork function as a syscall with a particular ID that we defined in the syscalls ID.
+- It then calls the function and stores its result.
