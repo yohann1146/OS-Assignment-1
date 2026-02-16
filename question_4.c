@@ -64,10 +64,9 @@ int main() {
             pid_t pid = fork();
 
             if (pid == 0) {
-                // exactly 4 times
-                if (strcmp(args[0], "ping") == 0) {
+                if (strcmp(args[0], "ping") == 0) { 
                     args[i++] = "-c";
-                    args[i++] = "4";
+                    args[i++] = "4";  //execute exactly 4 times
                     args[i] = NULL;
                 }
 
